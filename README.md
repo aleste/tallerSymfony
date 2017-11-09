@@ -1,4 +1,4 @@
 Taller Symfony para Arba
 ========================
 
-Curso-Taller Symfony para agentes de Arba
+Desarrollo del Curso-Taller Symfony para agentes de Arba
