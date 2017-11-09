@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}{% endblock %}
+
+{% block body %}
+
+	<section class="jumbotron text-center">
+        <div class="container">        
+            <img src="{{ asset('/assets/img/beers_banner.png')}}" width="100%" >
+            <h1 class="jumbotron-heading">Arba BEERS</h1>
+            <p class="lead text-muted">Delivery ONLINE</p>
+        </div>
+    </section>
+
+
+
+	<ul>
+		{% for c in cervezas %}
+			<li>{{ c }}</li>
+		{% endfor %}
+
+	</ul>
+
+	<h3>Colores</h3>
+
+	<ul>
+		
+	{% for color in colores %}
+		<li> {{ color.id }} - {{color}}</li>
+	{% endfor %}
+	</ul>
+
+	<select>
+	{% for c in cervezas %}
+			<option>{{ c }}</option>
+		{% endfor %}	
+	</select>
+
+{% endblock %}
