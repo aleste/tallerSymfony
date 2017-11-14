@@ -6,8 +6,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\CheckType;
+//Fields types usados por el createFormBuilder
+//use Symfony\Component\Form\Extension\Core\Type\TextType;
+//use Symfony\Component\Form\Extension\Core\Type\DateType;
+//use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use AppBundle\Entity\Color;
 use AppBundle\Form\ColorType;
@@ -58,6 +60,15 @@ class ColorController extends Controller
     {
     
         $color = new Color();
+
+        //crear un formulario en el controlador
+        /*      
+        $form = $this->createFormBuilder($color)
+            ->add('descripcion', TextType::class)
+            ->add('fecha', DateType::class)
+            ->add('save', SubmitType::class, array('label' => 'Grabar'))
+            ->getForm();
+        */
 
         //Prepara el formulario definido como clase en AppBundle\Form\ColorType.php
         $form = $this->createForm(ColorType::class, $color);    

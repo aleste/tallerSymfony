@@ -6,10 +6,12 @@
 	<div class="panel panel-default">
 		<div class="panel-body">
 
-			{{ form_start(form) }}
+			{# {{ form_start(form) }} #}
+			{{ form_start(form, {"attr":{"novalidate":"novalidate"}}) }}  
 	     
 	      <div class="form-group col-xs-6">
-	            <label>{{ form_label(form.descripcion) }}</label>                    
+	            <label>{{ form_label(form.descripcion) }}</label> 
+	            {{ form_errors(form.descripcion)}}                             
 	            {{ form_widget(form.descripcion, {'attr' : {'class' : 'form-control'} }) }}    
 	        </div>  
 

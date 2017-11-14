@@ -3,15 +3,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Color
+ * Origen
  *
- * @ORM\Table(name="color")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ColorRepository")
+ * @ORM\Table(name="origen")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\OrigenRepository")
  */
-class Color
+class Origen
 {
     /**
      * @var int
@@ -25,16 +24,15 @@ class Color
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcion", type="string", length=50)   
-     * @Assert\NotBlank()      
+     * @ORM\Column(name="descripcion", type="string", length=255)
      */
     private $descripcion;
-
 
     public function __toString()
     {
         return $this->descripcion;
-    }
+    }    
+
 
     /**
      * Get id
@@ -51,7 +49,7 @@ class Color
      *
      * @param string $descripcion
      *
-     * @return Color
+     * @return Origen
      */
     public function setDescripcion($descripcion)
     {

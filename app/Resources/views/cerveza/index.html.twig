@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Cervezas</h1>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Alcohol</th>
+                <th>Precio</th>
+                <th>Destacada</th>
+                <th>Foto</th>
+                <th>Presentacion</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cerveza in cervezas %}
+            <tr>
+                <td><a href="{{ path('catalogo_cerveza_show', { 'id': cerveza.id }) }}">{{ cerveza.id }}</a></td>
+                <td>{{ cerveza.nombre }}</td>
+                <td>{{ cerveza.descripcion }}</td>
+                <td>{{ cerveza.alcohol }}</td>
+                <td>{{ cerveza.precio }}</td>
+                <td>{% if cerveza.destacada %}Yes{% else %}No{% endif %}</td>
+                <td><img src="{{'/assets/img/uploads/' ~ cerveza.foto }}" class="foto-mini"></td>
+                <td>{{ cerveza.presentacion }}</td>
+                <td>                
+                    <a href="{{ path('catalogo_cerveza_show', { 'id': cerveza.id }) }}" class="btn btn-default">Ver</a>          
+                    <a href="{{ path('catalogo_cerveza_edit', { 'id': cerveza.id }) }}" class="btn btn-default">Editar</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+            <a href="{{ path('catalogo_cerveza_new') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Agregar</a>
+{% endblock %}
