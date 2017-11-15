@@ -51,6 +51,19 @@ class DeliveryController extends Controller
     }
 
 
+    /**
+     * @Route("/finalizar", name="finalizar")
+     */
+    public function finalizarAction(Request $request)
+    {
+        
+        
+        return $this->render('delivery/finalizarPedido.html.twig', [
+            //'cervezas' => $cervezas
+        ]);
+    }    
+
+
 }
 
 

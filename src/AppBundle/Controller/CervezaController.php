@@ -5,19 +5,17 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Cerveza;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\SerializerInterface;
 
-/**
- * Cerveza controller.
- *
- * @Route("catalogo/cerveza")
- */
 class CervezaController extends Controller
 {
     /**
      * Lists all cerveza entities.
      *
-     * @Route("/", name="catalogo_cerveza_index")
+     * @Route("catalogo/cervezas", name="catalogo_cerveza_index")
      * @Method("GET")
      */
     public function indexAction()
@@ -79,7 +77,7 @@ class CervezaController extends Controller
     /**
      * Finds and displays a cerveza entity.
      *
-     * @Route("/{id}", name="catalogo_cerveza_show")
+     * @Route("catalogo/cervezas/{id}", name="catalogo_cerveza_show")
      * @Method("GET")
      */
     public function showAction(Cerveza $cerveza)
@@ -105,8 +103,34 @@ class CervezaController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $formFiles = $request->files;
 
+          if(isset($formFiles->get('appbundle_cerveza')['foto'])){
+
+            // $file guarda la imagen             
+            $file = $cerveza->getFoto();             
+
+            // Genera un nombre unico antes de guardar
+            $fileName = sha1(uniqid()).'.'.$file->guessExtension();
+
+             // Mueve el erchivo al directorio uploads
+             $file->move(
+                 $this->getParameter('upload_dir'),
+                 $fileName
+             );
+
+                $cerveza->setFoto($fileName);        
+            }else{
+               
+            }
+
+            $this->addFlash(
+                'notice',
+                'Cerveza actualizada con éxito.'
+            );
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($cerveza);
+            $em->flush();      
             return $this->redirectToRoute('catalogo_cerveza_edit', array('id' => $cerveza->getId()));
         }
 
@@ -152,4 +176,18 @@ class CervezaController extends Controller
             ->getForm()
         ;
     }
+
+
+    /**
+    * @Route("/all", options={"expose"=true}, name="cervezas_get_all")
+    */    
+    public function getCervezasApi(SerializerInterface $serializer) {
+
+        $em = $this->getDoctrine()->getManager();
+        $cervezas = $em->getRepository('AppBundle:Cerveza')->findAll();
+        $cervezasTojson = $serializer->serialize($cervezas, 'json');  
+        return new JsonResponse($cervezasTojson);
+
+    }
+
 }
