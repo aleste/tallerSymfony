@@ -181,10 +181,21 @@ class CervezaController extends Controller
     /**
     * @Route("/all", options={"expose"=true}, name="cervezas_get_all")
     */    
-    public function getCervezasApi(SerializerInterface $serializer) {
+    public function getCervezasApi(SerializerInterface $serializer, Request $request) {
 
         $em = $this->getDoctrine()->getManager();
-        $cervezas = $em->getRepository('AppBundle:Cerveza')->findAll();
+
+        $aSelecionar = $request->query->get('select');
+
+        if ($aSelecionar == 'todas') {
+            $cervezas = $em->getRepository('AppBundle:Cerveza')->findAll();
+        }elseif($aSelecionar == 'destacadas') {
+            $cervezas = $em->getRepository('AppBundle:Cerveza')->getDestacadas();
+        }else{
+            $origen = $em->getRepository('AppBundle:Origen')->find($aSelecionar);
+            $cervezas = $em->getRepository('AppBundle:Cerveza')->getPorOrigen($origen);
+        }
+        
         $cervezasTojson = $serializer->serialize($cervezas, 'json');  
         return new JsonResponse($cervezasTojson);
 

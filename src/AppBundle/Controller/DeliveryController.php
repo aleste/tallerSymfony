@@ -15,9 +15,10 @@ class DeliveryController extends Controller
     {        
 
         $em = $this->getDoctrine()->getManager();
+        $origenes = $em->getRepository('AppBundle:Origen')->findAll();        
 
         //todos los registros y me retorna un array
-        $colores = $em->getRepository('AppBundle:Color')->findAll();        
+        //$colores = $em->getRepository('AppBundle:Color')->findAll();        
 
           //devuelve un objeto Color con id = 1
 //          $color = $em->getRepository('AppBundle:Color')->find(1);
@@ -30,15 +31,15 @@ class DeliveryController extends Controller
             'fecha' => $fecha
           ]);*/
 
+       // $cervezas = ['Quilmes', 'Palermo', 'Corona'];
 
 
-        
 
-        $cervezas = ['Quilmes', 'Palermo', 'Corona'];
 
         return $this->render('delivery/index.html.twig', [ 
-            'cervezas' => $cervezas,
-            'colores' => $colores
+            'origenes' => $origenes
+            //'cervezas' => $cervezas,
+            //'colores' => $colores
          ]);
     }
 

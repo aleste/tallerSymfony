@@ -20,8 +20,16 @@
                 {# Row Select Cerveza #}
                 <div class="row">
                     <div class="col-xs-8">
-                        <select name="selectCerveza" id="selectCerveza" class="form-control" onchange="cervezas.onSelectChange()">
-                            <option value="0">Elegí una cerveza...</option>          					
+                        <select id="preSelect" onchange="cervezas.load()" class="form-control">
+                          <option value="todas">Todas...</option>
+                          <option value="destacadas">Solo Destacadas...</option>
+                          <optgroup label="por Origen">
+                            {% for origen in origenes %}
+                              <option value="{{origen.id}}">{{origen.descripcion}}</option>
+                            {% endfor %}
+                          </optgroup>
+                        </select>
+                        <select name="selectCerveza" id="selectCerveza" class="form-control" onchange="cervezas.onSelectChange()">                            
                         </select>
                         <br>
                     </div>
@@ -31,44 +39,45 @@
 			       {# Row datos Cerveza #}
           		<div class="row">
           			<div class="col-xs-8">      				                    
-                        <table class="table table-bordered">					
-                            <tbody>									
-    							<tr>
-    								<th class="cervezaTitle" colspan="4"><span id="nombre"></span></th>
-    							</tr>
-    							<tr>
-    								<th class="cervezaSubtitle" colspan="4">Características</th>
-    							</tr>									
-    							<tr>
-    								<th>Origen</th>
-    								<td colspan="3"><span id="origen"></span></td>										
-    							</tr>									
-    							<tr>
-    								<th>Estilo</th>
-    								<td colspan="3"><span id="estilo"></span></td>										
-    							</tr>
-    							<tr>
-    								<th>Color</th>
-    								<td colspan="3"><span id="color"></span></td>										
-    							</tr>
-    							<tr>
-    								<th>Precio</th>
-    								<td>$ <span id="punit"></span></td>										
-    								<th>Presentación</th>
-    								<td><span id="presentacion"></span></td>
-    							</tr>									
-    							<tr>										
-    								<td colspan="4">
-    									<p>
-    									<span id="descripcion"></span>
-    									</p>
-    								</td>										
-    							</tr>
-    						</tbody>
-    					</table>
+                      <table class="table table-bordered">					
+                        <tbody>									
+            							<tr>
+            								<th class="cervezaTitle" colspan="4"><span id="nombre"></span></th>
+            							</tr>
+            							<tr>
+            								<th class="cervezaSubtitle" colspan="4">Características</th>
+            							</tr>									
+            							<tr>
+            								<th>Origen</th>
+            								<td colspan="3"><span id="origen"></span></td>										
+            							</tr>									
+            							<tr>
+            								<th>Estilo</th>
+            								<td colspan="3"><span id="estilo"></span></td>										
+            							</tr>
+            							<tr>
+            								<th>Color</th>
+            								<td colspan="3"><span id="color"></span></td>										
+            							</tr>
+            							<tr>
+            								<th>Precio</th>
+            								<td>$ <span id="punit"></span></td>										
+            								<th>Presentación</th>
+            								<td><span id="presentacion"></span></td>
+            							</tr>									
+            							<tr>										
+            								<td colspan="4">
+            									<p>
+            									<span id="descripcion"></span>
+            									</p>
+            								</td>										
+            							</tr>
+            						</tbody>
+            					</table>
                     </div>                
           			<div class="col-xs-4 card">      				      				   				
-                        <img src="{{ asset('assets/img/placeholder.png') }}" id="imgBeer" class="foto" >      				
+                        <img src="{{ asset('assets/img/placeholder.png') }}" id="imgBeer" class="foto" > 
+                    <div id="loading" class="hidden"><i class="fa fa-spinner fa-spin"></i> Cargando...</div>     				
           			</div>
           		</div>
 

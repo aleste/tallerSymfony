@@ -13,7 +13,9 @@ $( document ).ready(function() {
 		spanPUnit        : $("#punit"),
 		spanPresentacion : $("#presentacion"),
 		spanDescripcion  : $("#descripcion"),
-		imgBeer          : $("#imgBeer")
+		imgBeer          : $("#imgBeer"),
+		preSelect        : $("#preSelect"),
+		loading          : $("#loading")
 	})
 
 	cervezas.load()

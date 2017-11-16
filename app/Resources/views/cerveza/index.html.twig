@@ -12,6 +12,7 @@
                 <th>Alcohol</th>
                 <th>Precio</th>
                 <th>Destacada</th>
+                <th>Origen</th>
                 <th>Foto</th>
                 <th>Presentacion</th>
                 <th>Actions</th>
@@ -26,6 +27,7 @@
                 <td>{{ cerveza.alcohol }}</td>
                 <td>{{ cerveza.precio }}</td>
                 <td>{% if cerveza.destacada %}Yes{% else %}No{% endif %}</td>
+                <td>{{ cerveza}}</td>
                 <td><img src="{{'/assets/img/uploads/' ~ cerveza.foto }}" class="foto-mini"></td>
                 <td>{{ cerveza.presentacion }}</td>
                 <td>                

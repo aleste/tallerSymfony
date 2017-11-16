@@ -4,14 +4,20 @@ const cervezas = {
   	},
   	load () {					
 
-      const select = this.opt.selectCervezas;    
+      const select = this.opt.selectCervezas;   
+      const preSelect = this.opt.preSelect;      
+      select.html('');
+      this.opt.loading.removeClass('hidden');
   		$.ajax({
-    			url: Routing.generate('cervezas_get_all'),  			
+    			url: Routing.generate('cervezas_get_all'),
+          data: {
+            select: preSelect.val() 
+          }			
   		})
     		.done((data) => {  	  			  			
   			let items = [];
-    			$.each(JSON.parse(data), (key, cerveza) => {  
-
+    			select.append(`<option value="0">Seleccione una cerveza...</option>`);
+          $.each(JSON.parse(data), (key, cerveza) => {  
             select.append(`<option value="${cerveza.id}"
                          data-id="${cerveza.id}"
                          data-nombre="${cerveza.nombre}"
@@ -25,7 +31,10 @@ const cervezas = {
                          
     			})  	
 
-    		});		
+    		}).
+        always(() => {
+          this.opt.loading.addClass('hidden');
+        });		
   	},
     onSelectChange () {
 
